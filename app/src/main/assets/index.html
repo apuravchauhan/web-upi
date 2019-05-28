@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Apurav Chauhan">
+    <meta name="title" content="Web to android interaction">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    div {
+      margin: 5px;
+    }
+    .box{background: #f0f0f0;padding: 25px;}
+
+  </style>
+</head>
+
+<body style="padding:25px">
+<h2 class="box">
+    Web + Android UPI Apps
+    <hr>
+    <a style="font-size:12px" href="https://twitter.com/apuravchauhan">@apuravchauhan</a>
+</h2>
+<hr>
+<br>
+<div id="upi"></div>
+
+
+<script type="text/javascript">
+    window.onload = loadUPIHandlers;
+    function loadUPIHandlers() {
+      var a = ApuSDK.upiHandlers();
+      var upiList = a.length == 0 ? [] : a.split(",");
+      var dom = "";
+      if (upiList.length == 0) {
+        dom = '<div class="box">No UPI Apps found on phone.</div>';
+      } else {
+        for (var i = 0; i < upiList.length; i++) {
+          var info = upiList[i].split("|");
+          dom += '<div onClick="openUPI(\'' + info[0] + '\',\'' + info[1] + '\')"><h4><a href="javascript:void(0)">' + info[0] + '</a></h4></div>';
+        }
+      }
+      document.getElementById("upi").innerHTML = dom;
+    }
+
+    function openUPI(package, activity) {
+      ApuSDK.openUPIHandler(package, activity)
+    }
+  </script>
+</body>
+
+</html>
